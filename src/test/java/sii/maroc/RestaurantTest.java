@@ -6,7 +6,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 /*recipe of Tomato Mozzarella Salad is
      *
-     * 1 ball of Mozzarella
+     * 1 ball of Mozzarella 
      * 2 tomatoes
      * some olive oil
      *
@@ -31,8 +31,13 @@ public class RestaurantTest {
      */
 // Allowed modification zone starts here
     @Test
-    public void shouldFailWhenOutOfStock(){
-        Assert.fail();
+    public void shouldFailWhenOutOfStock() throws OutOfStockException{
+    	 Restaurant restaurant = new Restaurant("0 balls Mozzarella", "0 tomatoes", "olive oil", "pepper");
+         Ticket ticket = restaurant.order("1 Tomato Mozzarella Salad");
+         Meal meal = restaurant.retrieve(ticket);
+         assertEquals(meal.cookingDuration(), 6);
+         Assert.fail();
+       
     }
 // Allowed modification zone ends here
 
@@ -71,13 +76,14 @@ public class RestaurantTest {
      * Regarding baking :
      *   oven have unlimited capacity multiple dishes can be baked at the same time
      */
-    @Test
-    public void shouldServeMixedOrders(){
-        Restaurant restaurant = new Restaurant("1Kg Flour", "50 tomatoes", "sea salt", "6 balls Mozzarella", "olive oil", "water");
-        Ticket ticket = restaurant.order("3 Tomato Mozzarella Salad").and("2 Pizza");
-        Meal meal = restaurant.retrieve(ticket);
-        assertThat(meal.servedDishes()).isEqualTo(5);
-        assertThat(meal.cookingDuration()).isEqualTo(27);
-    }
+	
+	  @Test public void shouldServeMixedOrders(){ Restaurant restaurant = new
+	  Restaurant("1Kg Flour", "50 tomatoes", "sea salt", "6 balls Mozzarella",
+	  "olive oil", "water"); 
+	  Ticket ticket = restaurant.order("3 Tomato Mozzarella Salad").and("2 Pizza"); 
+	  Meal meal = restaurant.retrieve(ticket); 
+	  assertThat(meal.servedDishes()).isEqualTo(5);
+	  assertThat(meal.cookingDuration()).isEqualTo(27); }
+	 
 
 }
